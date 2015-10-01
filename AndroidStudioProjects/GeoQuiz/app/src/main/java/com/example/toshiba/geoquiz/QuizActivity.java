@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
@@ -22,6 +23,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
    // private Button mNextButton;
+    private LinearLayout mMainLinLayout;
     private TextView mQuestionTextView;
     //private Button mPreviousButton;
     private ImageButton mNextImageButton;
@@ -73,6 +75,15 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+            }
+        });
+
+        mMainLinLayout = (LinearLayout) findViewById(R.id.main_linear_layout);
+        mMainLinLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
             }
         });
 
