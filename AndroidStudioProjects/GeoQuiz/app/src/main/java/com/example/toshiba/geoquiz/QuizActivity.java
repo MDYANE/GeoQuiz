@@ -12,13 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
+import android.util.Log;
 
 
 public class QuizActivity extends AppCompatActivity {
 
-    private static final String TAG = "QuizActivity";
-    private static final String KEY_Index = "index";
     private static final int REQUEST_CODE_CHEAT = 0;
+    private static final String INDEX = "index";
+    private static final String KEY = "is_a_cheater";
+    private static final String TAG = "QuizActivity";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -29,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextImageButton;
     private ImageButton mPrevImageButton;
     private Button mCheatButton;
+
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_oceans,true),
@@ -69,6 +72,12 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(INDEX, 0);
+            mIsCheater = savedInstanceState.getBoolean(KEY);
+        }
+
 
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +133,7 @@ public class QuizActivity extends AppCompatActivity {
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
                 Intent i = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
                 startActivityForResult(i, REQUEST_CODE_CHEAT);
+               // startActivity(i);
             }
         });
 
@@ -160,6 +170,15 @@ public class QuizActivity extends AppCompatActivity {
             mIsCheater = CheatActivity.wasAnswerShown(data);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(KEY, mIsCheater);
+    }
+
 
 
     @Override
