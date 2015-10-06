@@ -1,6 +1,7 @@
 package com.example.toshiba.geoquiz;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextImageButton;
     private ImageButton mPrevImageButton;
     private Button mCheatButton;
+    private TextView mBuildTextView;
 
 
     private Question[] mQuestionBank = new Question[]{
@@ -154,6 +156,9 @@ public class QuizActivity extends AppCompatActivity {
                 checkAnswer(false);
             }
         });
+
+        mBuildTextView = (TextView) findViewById(R.id.API_level_text_view);
+        mBuildTextView.setText("API Level is" + Build.VERSION.SDK_INT);
         updateQuestion();
     }
 
