@@ -18,6 +18,8 @@ public class CrimeListFragment extends android.support.v4.app.Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private int mInt;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class CrimeListFragment extends android.support.v4.app.Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         }else{
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemChanged(mInt);
         }
 
     }
@@ -80,6 +82,7 @@ public class CrimeListFragment extends android.support.v4.app.Fragment {
             //Toast.makeText(getActivity(), mCrime.getTitle() + "clicked!", Toast.LENGTH_SHORT).show();
             //Intent intent = new Intent(getActivity(), CrimeActivity.class);
             Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            mInt = getAdapterPosition();
             startActivity(intent);
         }
 
