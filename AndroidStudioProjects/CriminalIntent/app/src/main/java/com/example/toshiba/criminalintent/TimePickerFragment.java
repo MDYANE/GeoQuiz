@@ -18,12 +18,14 @@ import java.util.GregorianCalendar;
 public class TimePickerFragment extends DialogFragment{
 
     public static final String EXTRA_TIME = "com.example.toshiba.criminalintent.time";
+    private static final String ARG_TIME = "time";
 
     private Date mTime;
 
+
     public static TimePickerFragment newInstance(Date date){
         Bundle args = new Bundle();
-        args.putSerializable(EXTRA_TIME, date);
+        args.putSerializable(ARG_TIME, date);
 
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setArguments(args);
@@ -32,7 +34,7 @@ public class TimePickerFragment extends DialogFragment{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        mTime = (Date) getArguments().getSerializable(EXTRA_TIME);
+        mTime = (Date) getArguments().getSerializable(ARG_TIME);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mTime);
@@ -41,10 +43,10 @@ public class TimePickerFragment extends DialogFragment{
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
 
-            TimePicker timePicker = (TimePicker) v.findViewById(R.id.dialog_time_timePicker);
-            timePicker.setHour(hour);
-            timePicker.setMinute(minute);
-            timePicker.setIs24HourView(false);
+            TimePicker mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_timePicker);
+            mTimePicker.setHour(hour);
+            mTimePicker.setMinute(minute);
+            mTimePicker.setIs24HourView(false);
         return new AlertDialog.Builder(getActivity()).setView(v).setTitle(R.string.date_picker_title).setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
